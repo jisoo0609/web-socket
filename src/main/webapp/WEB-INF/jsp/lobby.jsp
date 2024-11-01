@@ -2,17 +2,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Spring Boot WebSocket Chat Application</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<form id="enter-form">
-    <label for="username">
-        이름:
-        <input id="username" type="text">
-    </label>
-    <button id="enter-button" type="submit">입장</button>
-</form>
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">이름을 입력하세요</h1>
+        <form id="enter-form" name="usernameForm">
+            <div class="form-group">
+                <label for="username">
+                    <input type="text" id="username" placeholder="Input Username" autocomplete="off" class="form-control">
+                </label>
+            </div>
+            <div class="form-group">
+                <button id="enter-button" class="accent username-submit" type="submit">채팅 시작하기</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     document.getElementById('enter-form').addEventListener('submit', event => {
         event.preventDefault();
