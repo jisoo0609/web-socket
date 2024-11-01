@@ -122,7 +122,8 @@
         console.log(msg)
         const data = JSON.parse(msg.data)
         const chatMessage = document.createElement('div')
-        // 공지 메시지일 경우
+
+        // 공지 메시지인지 확인
         if (data.username === 'notice') {
             chatMessage.classList.add('notice-message');
         } else {
@@ -133,6 +134,10 @@
 
         chatMessage.appendChild(message)
         document.getElementById('response').appendChild(chatMessage)
+
+        // 스크롤을 항상 하단으로 설정
+        const responseDiv = document.getElementById('response');
+        responseDiv.scrollTop = responseDiv.scrollHeight;
     }
     webSocket.onclose = (event) => {
         console.log(event)
