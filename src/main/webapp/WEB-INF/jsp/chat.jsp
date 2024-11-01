@@ -48,13 +48,13 @@
             padding: 10px 15px;
             border: none;
             border-radius: 4px;
-            background-color: #5cb85c;
+            background-color: #4cae4c;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #4cae4c;
+            background-color: #1E90FF;
         }
         p {
             margin: 5px 0;
