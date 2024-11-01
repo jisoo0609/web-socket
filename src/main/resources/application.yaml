@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: chat
+
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
