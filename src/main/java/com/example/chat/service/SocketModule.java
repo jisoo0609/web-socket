@@ -53,6 +53,7 @@ public class SocketModule {
             String username = params.get("username").stream().collect(Collectors.joining());
 
             client.joinRoom(room);
+            log.info("client joined room!");
             connectedClients.add(username);
 
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);

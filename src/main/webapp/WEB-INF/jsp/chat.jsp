@@ -107,55 +107,73 @@
         <button type="submit">Send</button>
     </form>
 </div>
+<script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
 <script>
-    const username = (new URLSearchParams(location.search)).get('username')
-    document.getElementById('username-holder').innerText = username
-    const webSocket = new WebSocket('ws://localhost:8080/ws/chat')
-    webSocket.onopen = (event) => {
-        console.log(event)
-        webSocket.send(JSON.stringify({
+    const username = (new URLSearchParams(location.search)).get('username');
+    const room = 'test';
+    console.log("username: ", username);
+    document.getElementById('username-holder').innerText = username;
+
+    // Socket.io 연결
+    const socket = io('http://localhost:8081', {
+        query: {
+            room: room,
+            username: username
+        }
+    });
+
+    // 채팅방 입장 시 공지 전송
+    socket.on('connect', () => {
+        socket.emit('get_message', {
             username: 'notice',
             message: username + '님이 입장했습니다.'
-        }))
-    }
-    webSocket.onmessage = (msg) => {
-        console.log(msg)
-        const data = JSON.parse(msg.data)
-        const chatMessage = document.createElement('div')
+        });
+    });
+
+    // 메시지 수신 시
+    socket.on('chat-message', (data) => {
+        console.log(data);
+        const chatMessage = document.createElement('div');
 
         // 공지 메시지인지 확인
         if (data.username === 'notice') {
             chatMessage.classList.add('notice-message');
         } else {
-            chatMessage.classList.add('chat-message');
+            chatMessage.classList.add('get_message');
         }
-        const message = document.createElement('p')
-        message.innerText = data.username + ': ' + data.message;
 
-        chatMessage.appendChild(message)
-        document.getElementById('response').appendChild(chatMessage)
+        const message = document.createElement('p');
+        message.innerText = `${data.username}: ${data.message}`;
+
+        chatMessage.appendChild(message);
+        document.getElementById('response').appendChild(chatMessage);
 
         // 스크롤을 항상 하단으로 설정
         const responseDiv = document.getElementById('response');
         responseDiv.scrollTop = responseDiv.scrollHeight;
-    }
-    webSocket.onclose = (event) => {
-        console.log(event)
-        webSocket.send(JSON.stringify({
-            username,
-            message: username + `퇴장`
-        }))
-    }
+    });
 
-    document.getElementById('chat-form').addEventListener('submit', e => {
-        e.preventDefault()
-        const messageInput = document.getElementById('message')
-        const message = messageInput.value
-        webSocket.send(JSON.stringify({
-            username, message
-        }))
-        messageInput.value = ''
-    })
+    // 채팅방 퇴장 시
+    window.addEventListener('beforeunload', () => {
+        socket.emit('get_message', {
+            username: username,
+            message: username + '님이 퇴장했습니다.'
+        });
+    });
+
+    // 메시지 전송
+    document.getElementById('chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+
+        socket.emit('get_message', {
+            username: username,
+            message: message
+        });
+
+        messageInput.value = '';
+    });
 
 </script>
 </body>
