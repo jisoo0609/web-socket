@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.websocket.Session;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class SocketIoConfig {
         config.setPort(port);
 
         server = new SocketIOServer(config);
-        log.info("=====>server start!");
+        log.info("========>server start!");
         server.start();
 
         server.addConnectListener(client -> log.info("Client connected: {}", client.getSessionId()));

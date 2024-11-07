@@ -5,16 +5,16 @@ import lombok.Data;
 @Data
 public class ChatMessage {
     private MessageType type;
-    private String username;
+    private String room;
     private String message;
 
     public ChatMessage() {
 
     }
 
-    public ChatMessage(MessageType type, String username, String message) {
+    public ChatMessage(MessageType type, String room, String message) {
         this.type = type;
-        this.username = username;
+        this.room = room;
         this.message = message;
     }
 }
