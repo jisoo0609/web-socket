@@ -47,8 +47,6 @@ public class SocketIOHandler {
 
     public ConnectListener onConnected() {
         return (client) -> {
-//            String room = client.getHandshakeData().getSingleUrlParam("room");
-//            String username = client.getHandshakeData().getSingleUrlParam("username");
             Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
             String room = params.get("room").stream().collect(Collectors.joining());
             String username = params.get("username").stream().collect(Collectors.joining());
@@ -59,9 +57,6 @@ public class SocketIOHandler {
                 memberList.add(username);
             }
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
-//            log.info("member List: {}", connectedClients.stream()
-//                                        .map(c -> c.getSessionId().toString())
-//                                        .collect(Collectors.joining(",")));
             log.info("member List: {}", getMemberList().toString());
         };
     }
