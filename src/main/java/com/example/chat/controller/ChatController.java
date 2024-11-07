@@ -1,6 +1,6 @@
 package com.example.chat.controller;
 
-import com.example.chat.service.SocketModule;
+import com.example.chat.service.SocketIOHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/chat")
 @AllArgsConstructor
 public class ChatController {
-    private final SocketModule socketModule;
+    private final SocketIOHandler socketModule;
 
     @RequestMapping("/lobby")
     public String lobby() {

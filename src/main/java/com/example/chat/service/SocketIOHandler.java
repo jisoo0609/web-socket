@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class SocketModule {
+public class SocketIOHandler {
     @Getter
     private final SocketIOServer server;
     private final SocketService socketService;
     @Getter
     private final List<String> memberList = new ArrayList<>();
 
-    public SocketModule(SocketIOServer socketServer, SocketService socketService) {
+    public SocketIOHandler(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
         this.socketService = socketService;
         // 누군가 소켓에 연결하면 실행
