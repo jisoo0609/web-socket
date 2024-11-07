@@ -8,6 +8,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.example.chat.model.ChatMessage;
 import com.example.chat.model.SocketDetail;
+import com.example.chat.service.SocketService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,9 +23,11 @@ public class WebSocketConfig {
 
     @Getter
     private final SocketIOServer server;
+    private final SocketService socketService;
 
-    public WebSocketConfig(SocketIOServer socketServer) {
+    public WebSocketConfig(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
+        this.socketService = socketService;
         // 누군가 소켓에 연결하면 실행
         server.addConnectListener(onConnected());
         // 누군가 소켓에서 연결 끊을 때 실행
@@ -36,12 +39,15 @@ public class WebSocketConfig {
         return (senderClient, data, ackSender) -> {
             log.info(data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
-            senderClient.getNamespace().getBroadcastOperations().sendEvent("get_Message", data.getMessage());
+            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getMessage());
+            log.info("get_Message : {}", data.getMessage());
         };
     }
 
     public ConnectListener onConnected() {
         return (client) -> {
+            String room = client.getHandshakeData().getSingleUrlParam("room");
+            client.joinRoom(room);
             log.info("Socket ID {} Connected to socket", client.getSessionId().toString());
         };
     }

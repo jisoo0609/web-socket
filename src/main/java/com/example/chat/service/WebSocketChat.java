@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@ServerEndpoint("/ws/chat")
+//@ServerEndpoint("/ws/chat")
 public class WebSocketChat {
     // 클라이언트의 session 정보 저장
     private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());

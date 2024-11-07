@@ -12,9 +12,8 @@ public class ChatMessage {
 
     }
 
-    public ChatMessage(MessageType type, String room, String message) {
+    public ChatMessage(MessageType type, String message) {
         this.type = type;
-        this.room = room;
         this.message = message;
     }
 }
