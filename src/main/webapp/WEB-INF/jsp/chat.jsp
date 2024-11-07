@@ -100,10 +100,10 @@
 <div id="member-list">
     <h3>Now Connecting Member List</h3>
     <table>
-        <c:forEach var="member" items="${member}">
-            <tr>
-                <td>${member}</td>
-            </tr>
+        <c:forEach var="member" items="${memberList}">
+        <tr>
+            <td>${member.username}</td>
+        </tr>
         </c:forEach>
     </table>
 </div>

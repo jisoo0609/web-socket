@@ -1,5 +1,6 @@
 package com.example.chat.controller;
 
+import com.example.chat.model.Message;
 import com.example.chat.service.SocketModule;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,8 @@ public class ChatController {
     @RequestMapping("/enter")
     public String enter(Model model) {
         log.info("=====enter=====");
-        Set<String> connectedClients = socketModule.getConnectedClients();
-        model.addAttribute("member", connectedClients);
+        Set<Message> connectedList = socketModule.getConnectedList();
+        model.addAttribute("memberList", connectedList);
         return "chat";
     }
 

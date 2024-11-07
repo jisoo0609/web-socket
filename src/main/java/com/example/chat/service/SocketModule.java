@@ -23,7 +23,7 @@ public class SocketModule {
     private final SocketIOServer server;
     private final SocketService socketService;
     @Getter
-    private final Set<String> connectedClients = new HashSet<>();
+    private final Set<Message> connectedList = new HashSet<>();
 
     public SocketModule(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
@@ -54,13 +54,13 @@ public class SocketModule {
 
             client.joinRoom(room);
             log.info("client joined room!");
-            connectedClients.add(username);
+            connectedList.add(Message.builder().username(username).build());
 
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
 //            log.info("member List: {}", connectedClients.stream()
 //                                        .map(c -> c.getSessionId().toString())
 //                                        .collect(Collectors.joining(",")));
-            log.info("member List: {}", getConnectedClients());
+            log.info("member List: {}", getConnectedList());
         };
     }
 
@@ -70,10 +70,10 @@ public class SocketModule {
             String room = params.get("room").stream().collect(Collectors.joining());
             String username = params.get("username").stream().collect(Collectors.joining());
 
-            connectedClients.remove(username);
+            connectedList.remove(Message.builder().username(username).build());
 
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
-            log.info("member List: {}", getConnectedClients());
+            log.info("member List: {}", getConnectedList());
         };
     }
 }
