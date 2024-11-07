@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -47,7 +48,10 @@ public class SocketModule {
             String username = client.getHandshakeData().getSingleUrlParam("username");
             client.joinRoom(room);
             connectedClients.add(client);
-            log.info("====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
+            log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
+            log.info("member List: {}", connectedClients.stream()
+                                        .map(c -> c.getSessionId().toString())
+                                        .collect(Collectors.joining(",")));
         };
     }
 
