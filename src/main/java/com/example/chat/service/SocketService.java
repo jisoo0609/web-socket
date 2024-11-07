@@ -1,7 +1,7 @@
 package com.example.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.example.chat.model.ChatMessage;
+import com.example.chat.model.Message;
 import com.example.chat.model.MessageType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class SocketService {
                 SocketIOClient client : senderClient.getNamespace().getRoomOperations(room).getClients()
         ) {
             if (!client.getSessionId().equals(senderClient.getSessionId())) {
-                client.sendEvent(eventName, new ChatMessage(MessageType.SERVER, message));
+                client.sendEvent(eventName, new Message(MessageType.SERVER, message));
             }
         }
     }

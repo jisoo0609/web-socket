@@ -1,0 +1,28 @@
+package com.example.chat.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Message {
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
+    private String room;
+    private String message;
+    private String username;
+
+    public Message(MessageType type, String message) {
+        this.type = type;
+        this.message = message;
+    }
+}
+
+
