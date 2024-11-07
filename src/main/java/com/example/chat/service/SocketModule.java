@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,7 @@ public class SocketModule {
     private final SocketIOServer server;
     private final SocketService socketService;
     @Getter
-    private final Set<SocketIOClient> connectedClients = new HashSet<>();
+    private final Set<String> connectedClients = new HashSet<>();
 
     public SocketModule(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
@@ -44,23 +46,33 @@ public class SocketModule {
 
     public ConnectListener onConnected() {
         return (client) -> {
-            String room = client.getHandshakeData().getSingleUrlParam("room");
-            String username = client.getHandshakeData().getSingleUrlParam("username");
+//            String room = client.getHandshakeData().getSingleUrlParam("room");
+//            String username = client.getHandshakeData().getSingleUrlParam("username");
+            Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
+            String room = params.get("room").stream().collect(Collectors.joining());
+            String username = params.get("username").stream().collect(Collectors.joining());
+
             client.joinRoom(room);
-            connectedClients.add(client);
+            connectedClients.add(username);
+
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
-            log.info("member List: {}", connectedClients.stream()
-                                        .map(c -> c.getSessionId().toString())
-                                        .collect(Collectors.joining(",")));
+//            log.info("member List: {}", connectedClients.stream()
+//                                        .map(c -> c.getSessionId().toString())
+//                                        .collect(Collectors.joining(",")));
+            log.info("member List: {}", getConnectedClients());
         };
     }
 
     public DisconnectListener onDisconnected() {
         return (client) -> {
-            String room = client.getHandshakeData().getSingleUrlParam("room");
-            String username = client.getHandshakeData().getSingleUrlParam("username");
-            connectedClients.remove(client);
+           Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
+            String room = params.get("room").stream().collect(Collectors.joining());
+            String username = params.get("username").stream().collect(Collectors.joining());
+
+            connectedClients.remove(username);
+
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
+            log.info("member List: {}", getConnectedClients());
         };
     }
 }
