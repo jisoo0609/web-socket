@@ -114,7 +114,6 @@
     console.log("username: ", username);
     document.getElementById('username-holder').innerText = username;
 
-    // Socket.io 연결
     const socket = io('http://localhost:8081', {
         query: {
             room: room,
@@ -122,24 +121,25 @@
         }
     });
 
-    // 채팅방 입장 시 공지 전송
+    // 서버 연결 후, 입장 알림 메시지 보내기
     socket.on('connect', () => {
-        socket.emit('get_message', {
+        socket.emit('send_message', {
             username: 'notice',
-            message: username + '님이 입장했습니다.'
+            message: username+`님이 입장했습니다.`,
+            type: 'SERVER',
+            room: room
         });
     });
 
-    // 메시지 수신 시
-    socket.on('chat-message', (data) => {
+    // 메시지 수신 처리
+    socket.on('get_message', (data) => {
         console.log(data);
         const chatMessage = document.createElement('div');
 
-        // 공지 메시지인지 확인
-        if (data.username === 'notice') {
+        if (data.type === 'SERVER') {
             chatMessage.classList.add('notice-message');
         } else {
-            chatMessage.classList.add('get_message');
+            chatMessage.classList.add('chat-message');
         }
 
         const message = document.createElement('p');
@@ -153,28 +153,37 @@
         responseDiv.scrollTop = responseDiv.scrollHeight;
     });
 
-    // 채팅방 퇴장 시
-    window.addEventListener('beforeunload', () => {
-        socket.emit('get_message', {
-            username: username,
-            message: username + '님이 퇴장했습니다.'
-        });
-    });
-
-    // 메시지 전송
+    // 채팅폼 제출 시 메시지 보내기
     document.getElementById('chat-form').addEventListener('submit', (e) => {
-        e.preventDefault();
+        e.preventDefault();  // 기본 제출 동작을 막기
+
         const messageInput = document.getElementById('message');
-        const message = messageInput.value;
+        const messageContent = messageInput.value;  // 사용자가 입력한 메시지 가져오기
 
-        socket.emit('get_message', {
-            username: username,
-            message: message
-        });
+        if (messageContent.trim() !== "") {  // 빈 메시지 보내지 않기
+            // 메시지 객체 생성
+            const message = {
+                type: 'CLIENT',   // 메시지 유형 (텍스트)
+                room: room,     // 방 이름
+                message: messageContent,  // 사용자가 입력한 메시지 내용
+                username: username   // 보낸 사람 이름
+            };
 
-        messageInput.value = '';
+            // 메시지 전송
+            socket.emit('send_message', message);
+            messageInput.value = '';  // 입력 필드 초기화
+        }
     });
 
+    // 브라우저를 닫을 때, 퇴장 메시지 보내기
+    window.addEventListener('beforeunload', () => {
+        socket.emit('send_message', {
+            username: username,
+            message: username+`님이 퇴장했습니다.`,
+            type: 'SERVER',
+            room: room
+        });
+    });
 </script>
 </body>
 </html>

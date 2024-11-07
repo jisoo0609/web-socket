@@ -40,7 +40,7 @@ public class SocketModule {
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
             socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getMessage());
-            log.info("get_Message : {}", data.getMessage());
+            log.info("send_username: {}, get_Message : {}", data.getUsername(), data.getMessage());
         };
     }
 
