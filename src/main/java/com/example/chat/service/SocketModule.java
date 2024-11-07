@@ -60,7 +60,7 @@ public class SocketModule {
 //            log.info("member List: {}", connectedClients.stream()
 //                                        .map(c -> c.getSessionId().toString())
 //                                        .collect(Collectors.joining(",")));
-            log.info("member List: {}", getConnectedList());
+            log.info("member List: {}", getConnectedList().stream().map(Message::getUsername).collect(Collectors.toList()));
         };
     }
 
@@ -73,7 +73,7 @@ public class SocketModule {
             connectedList.remove(Message.builder().username(username).build());
 
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
-            log.info("member List: {}", getConnectedList());
+            log.info("member List: {}", getConnectedList().stream().map(Message::getUsername).collect(Collectors.joining()));
         };
     }
 }
