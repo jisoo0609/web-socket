@@ -108,17 +108,8 @@
     </style>
 </head>
 <body>
-<div class="member-list" id="member-list">
-    <h3>Connected Member List</h3>
-    <table>
-        <c:forEach items="${memberList}" var="member">
-            <tr>
-                <td>${member}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
-
+<button type="button" onclick="getMemberList()">Connected Member List</button>
+<div id="member-list"></div>
 <h3 class="room-name" id="room-name">Room</h3>
 
 <div id="conversation">
@@ -210,6 +201,18 @@
             room: room
         });
     });
+
+    function getMemberList() {
+        socket.emit('get_member_list', null, (members) => {
+            let memberListContainer = document.getElementById('member-list');
+            memberListContainer.innerHTML = '';
+            members.forEach((member) => {
+                let memberItem = document.createElement('p');
+                memberItem.innerText = member;
+                memberListContainer.appendChild(memberItem);
+            });
+        });
+    }
 </script>
 </body>
 </html>

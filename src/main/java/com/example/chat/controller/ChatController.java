@@ -26,11 +26,18 @@ public class ChatController {
     }
 
     @RequestMapping("/enter")
-    public String enter(Model model, Locale locale) {
+    public String enter(Model model) {
         log.info("=====enter=====");
-        List<String> memberList = socketModule.getMemberList();
-        model.addAttribute("memberList", memberList);
         return "chat";
+    }
+
+    @RequestMapping("/member-list")
+    public String memberList(Model model) {
+        log.info("=====Connecting member-list=====");
+        List<String> memberList = socketModule.getMemberList();
+        log.info("memberList: {}", memberList);
+        model.addAttribute("memberList", memberList);
+        return "member-list";
     }
 
 }

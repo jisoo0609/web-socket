@@ -1,12 +1,10 @@
 package com.example.chat.service;
 
-import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.example.chat.model.Message;
-import com.example.chat.model.MessageType;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,6 +31,9 @@ public class SocketModule {
         // 누군가 소켓에서 연결 끊을 때 실행
         server.addDisconnectListener(onDisconnected());
         socketServer.addEventListener("send_message", Message.class, onChatReceived());
+        socketServer.addEventListener("get_member_list", Void.class, (client, data, ackSender) -> {
+            ackSender.sendAckData(memberList);
+        });
     }
 
     public DataListener<Message> onChatReceived() {
