@@ -94,15 +94,26 @@
             flex-direction: column;
             align-items: flex-start;
         }
+        #member-list {
+            position: relative;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            background-color: #f4f4f9;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
-<div id="member-list">
-    <h3>Now Connecting Member List</h3>
+<div class="member-list" id="member-list">
+    <h3>Connected Member List</h3>
     <table>
         <c:forEach items="${memberList}" var="member">
             <tr>
-                <td>${member.username}</td>
+                <td>${member}</td>
             </tr>
         </c:forEach>
     </table>
@@ -136,26 +147,6 @@
         }
     });
 
-    // 멤버 목록 갱신
-    function updateMemberList(members) {
-        var memberList = document.getElementById('member-list');
-        var table = memberList.getElementsByTagName('table')[0];
-
-        // 새로운 목록 표시
-        members.forEach(function (member) {
-            var row = table.insertRow();
-            var cell = row.insertCell(0);
-            cell.textContent = member;
-        });
-    }
-
-    // 서버에서 멤버리스트를 받아서 갱신하는 이벤트 리스너
-    socket.on('update_member_list', (updatedMembers) => {
-        members = updatedMembers;
-        updateMemberList(members);
-        console.log("Updated member list: ", members);
-    });
-
     // 서버 연결 후, 입장 알림 메시지 보내기
     socket.on('connect', () => {
         socket.emit('send_message', {
@@ -164,12 +155,6 @@
             type: 'SERVER',
             room: room
         });
-        // 서버에 현재 멤버 추가 요청
-        socket.emit('update_members', 'join', username);
-
-        // 초기 멤버리스트 갱신 요청
-        socket.emit('get_members', room);
-        console.log("memberListUpdate: ", members);
     });
 
     // 메시지 수신 처리
@@ -218,9 +203,6 @@
 
     // 브라우저를 닫을 때, 퇴장 메시지 보내기
     window.addEventListener('beforeunload', () => {
-        // 서버에 퇴장 처리 요청
-        socket.emit('update_members', 'leave', username);
-
         socket.emit('send_message', {
             username: username,
             message: username+`님이 퇴장했습니다.`,

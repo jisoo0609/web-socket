@@ -6,14 +6,14 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.example.chat.model.Message;
+import com.example.chat.model.MessageType;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,7 +23,7 @@ public class SocketModule {
     private final SocketIOServer server;
     private final SocketService socketService;
     @Getter
-    private final Set<Message> connectedList = new HashSet<>();
+    private final List<String> memberList = new ArrayList<>();
 
     public SocketModule(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
@@ -54,13 +54,14 @@ public class SocketModule {
 
             client.joinRoom(room);
             log.info("client joined room!");
-            connectedList.add(Message.builder().username(username).build());
-
+            if (!memberList.contains(username)) {
+                memberList.add(username);
+            }
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
 //            log.info("member List: {}", connectedClients.stream()
 //                                        .map(c -> c.getSessionId().toString())
 //                                        .collect(Collectors.joining(",")));
-            log.info("member List: {}", getConnectedList().stream().map(Message::getUsername).collect(Collectors.toList()));
+            log.info("member List: {}", getMemberList().toString());
         };
     }
 
@@ -70,10 +71,10 @@ public class SocketModule {
             String room = params.get("room").stream().collect(Collectors.joining());
             String username = params.get("username").stream().collect(Collectors.joining());
 
-            connectedList.remove(Message.builder().username(username).build());
+            memberList.remove(username);
 
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
-            log.info("member List: {}", getConnectedList().stream().map(Message::getUsername).collect(Collectors.joining()));
+            log.info("member List: {}", getMemberList().toString());
         };
     }
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -24,10 +26,10 @@ public class ChatController {
     }
 
     @RequestMapping("/enter")
-    public String enter(Model model) {
+    public String enter(Model model, Locale locale) {
         log.info("=====enter=====");
-        Set<Message> connectedList = socketModule.getConnectedList();
-        model.addAttribute("memberList", connectedList);
+        List<String> memberList = socketModule.getMemberList();
+        model.addAttribute("memberList", memberList);
         return "chat";
     }
 
