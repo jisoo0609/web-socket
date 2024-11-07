@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,7 @@
             padding: 20px;
             color: #333;
         }
-        h3 {
+        #room-name {
             text-align: center;
             color: #444;
         }
@@ -96,14 +97,27 @@
     </style>
 </head>
 <body>
-<h3 id="room-name"></h3>
+<div id="member-list">
+    <h3>Now Connecting Member List</h3>
+    <table>
+        <c:forEach var="member" items="${member}">
+            <tr>
+                <td>${member}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
+
+<h3 class="room-name" id="room-name">Room</h3>
+
 <div id="conversation">
     <div id="response"></div>
+
     <form id="chat-form">
-        <h4>
-            <span id="username-holder"></span>
-        </h4>
-        <label for="message"></label><input type="text" id="message" placeholder="Write a message..."/>
+        <h4><span id="username-holder"></span></h4>
+        <label for="message"></label>
+        <input type="text" id="message" placeholder="Write a message..." />
+
         <button type="submit">Send</button>
     </form>
 </div>
