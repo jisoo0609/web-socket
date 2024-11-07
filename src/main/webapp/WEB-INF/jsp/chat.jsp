@@ -104,12 +104,16 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             z-index: 1000;
+            display: none;
         }
     </style>
 </head>
 <body>
 <button type="button" onclick="getMemberList()">Connected Member List</button>
-<div id="member-list"></div>
+<div id="member-list">
+    <div id="members"></div>
+    <button type="button" onclick="buttonClose()">Close</button>
+</div>
 <h3 class="room-name" id="room-name">Room</h3>
 
 <div id="conversation">
@@ -204,14 +208,22 @@
 
     function getMemberList() {
         socket.emit('get_member_list', null, (members) => {
-            let memberListContainer = document.getElementById('member-list');
-            memberListContainer.innerHTML = '';
+            let memberListContainer = document.getElementById('members');
+            memberListContainer.innerHTML = '';  // 기존 목록 초기화
             members.forEach((member) => {
                 let memberItem = document.createElement('p');
                 memberItem.innerText = member;
                 memberListContainer.appendChild(memberItem);
             });
+
+            // 'member-list' 영역을 보이게 하기
+            document.getElementById('member-list').style.display = 'block';
         });
+    }
+
+    // 'Close' 버튼 클릭 시 'member-list' 영역 숨기기
+    function buttonClose() {
+        document.getElementById('member-list').style.display = 'none';  // 목록 숨기기
     }
 </script>
 </body>
