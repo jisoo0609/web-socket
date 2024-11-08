@@ -62,19 +62,24 @@
             room: room,
             date: getFormattedDateTime()
         };
-        socket.emit('send_message', data);
 
+        socket.emit('send_message', data);
+        addMessageToChat(data);
+    });
+
+    function addMessageToChat(data) {
         const responseDiv = document.getElementById('response');
 
         const chatMessage = document.createElement('div');
         const message = document.createElement('p');
-        message.innerText = "이름: " + data.username + " 입장 시간: " + data.date;
+
+        message.innerText = "이름: " + data.username + "\t입장 시간: " + data.date;
 
         chatMessage.appendChild(message);
         responseDiv.appendChild(chatMessage);
 
         responseDiv.scrollTop = responseDiv.scrollHeight;
-    });
+    }
 
     // 채팅폼 제출 시 메시지 보내기
     document.getElementById('chat-form').addEventListener('submit', (e) => {
