@@ -20,8 +20,9 @@ public class Message {
     private String username;
     private String date;  // 입장시간
 
-    public Message(MessageType type, String date) {
+    public Message(MessageType type, String username, String date) {
         this.type = type;
+        this.username = username;
         this.date = date;
     }
 }

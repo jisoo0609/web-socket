@@ -17,13 +17,8 @@
 
 <div id="conversation">
     <div id="response"></div>
-
     <form id="chat-form">
         <h4><span id="username-holder"></span></h4>
-        <label for="message"></label>
-        <input type="text" id="message" placeholder="Write a message..." />
-
-        <button type="submit">Send</button>
     </form>
 </div>
 <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
@@ -60,34 +55,24 @@
 
     // 서버 연결 후, 입장 알림 메시지 보내기
     socket.on('connect', () => {
-        socket.emit('send_message', {
+        const data = {
             username: username,
-            message: username+'님이 입장했습니다.',
-            type: 'SERVER',
+            message: username + '님이 입장했습니다.',
+            type: 'SERVER',  // 서버 메시지로 구분
             room: room,
             date: getFormattedDateTime()
-        });
-    });
+        };
+        socket.emit('send_message', data);
 
-    // 메시지 수신 처리
-    socket.on('get_message', (data) => {
-        console.log(data);
+        const responseDiv = document.getElementById('response');
+
         const chatMessage = document.createElement('div');
-
-        if (data.type === 'SERVER') {
-            chatMessage.classList.add('notice-message');
-        } else {
-            chatMessage.classList.add('chat-message');
-        }
-
         const message = document.createElement('p');
-        message.innerText = `${data.username}: ${data.date}`;
+        message.innerText = "이름: " + data.username + " 입장 시간: " + data.date;
 
         chatMessage.appendChild(message);
-        document.getElementById('response').appendChild(chatMessage);
+        responseDiv.appendChild(chatMessage);
 
-        // 스크롤을 항상 하단으로 설정
-        const responseDiv = document.getElementById('response');
         responseDiv.scrollTop = responseDiv.scrollHeight;
     });
 
@@ -104,7 +89,7 @@
                 type: 'CLIENT',   // 메시지 유형 (텍스트)
                 room: room,     // 방 이름
                 message: messageContent,  // 사용자가 입력한 메시지 내용
-                username: username   // 보낸 사람 이름
+                username: username, // 보낸 사람 이름
             };
 
             // 메시지 전송

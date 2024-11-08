@@ -47,7 +47,6 @@ public class SocketIOHandler {
         };
     }
 
-
     public ConnectListener onConnected() {
         return (client) -> {
             Map<String, List<String>> params = client.getHandshakeData().getUrlParams();

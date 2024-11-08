@@ -13,19 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/chat")
 @AllArgsConstructor
 public class ChatController {
-    private final SocketIOHandler socketModule;
+    private final SocketIOHandler socketIOHandler;
 
     @RequestMapping("/lobby")
     public String lobby() {
         log.info("=====enter lobby=====");
         return "lobby";
     }
-
-//    @RequestMapping("/enter")
-//    public String enter(Model model) {
-//        log.info("=====enter=====");
-//        return "chat";
-//    }
 
     @RequestMapping("/enter")
     public String enter(@RequestParam String username, Model model) {
