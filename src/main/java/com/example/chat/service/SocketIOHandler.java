@@ -30,9 +30,10 @@ public class SocketIOHandler {
         server.addConnectListener(onConnected());
         // 누군가 소켓에서 연결 끊을 때 실행
         server.addDisconnectListener(onDisconnected());
+
         socketServer.addEventListener("send_message", Message.class, onChatReceived());
         socketServer.addEventListener("get_member_list", Void.class, (client, data, ackSender) -> {
-            ackSender.sendAckData(memberList);
+                ackSender.sendAckData(memberList);
         });
     }
 
@@ -40,10 +41,11 @@ public class SocketIOHandler {
         return (senderClient, data, ackSender) -> {
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
-            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getMessage());
-            log.info("send_username: {}, get_Message : {}", data.getUsername(), data.getMessage());
+            socketService.sendMessage(data.getRoom(), "get_message", senderClient, String.valueOf(data.getDate()));
+            log.info("send_username: {}, enter_date: {}", data.getUsername(), data.getDate());
         };
     }
+
 
     public ConnectListener onConnected() {
         return (client) -> {
@@ -58,6 +60,7 @@ public class SocketIOHandler {
             }
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
             log.info("member List: {}", getMemberList().toString());
+
         };
     }
 

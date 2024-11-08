@@ -15,13 +15,14 @@ import javax.persistence.Enumerated;
 public class Message {
     @Enumerated(EnumType.STRING)
     private MessageType type;
-    private String room;
     private String message;
+    private String room;
     private String username;
+    private String date;  // 입장시간
 
-    public Message(MessageType type, String message) {
+    public Message(MessageType type, String date) {
         this.type = type;
-        this.message = message;
+        this.date = date;
     }
 }
 
