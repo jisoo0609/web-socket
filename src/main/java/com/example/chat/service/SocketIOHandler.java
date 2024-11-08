@@ -42,7 +42,7 @@ public class SocketIOHandler {
             log.info("=========onChatReceived-===============");
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
-            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getUsername(), data.getDate());
+            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getUsername(), data.getEnterDate());
         };
     }
 

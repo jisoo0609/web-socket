@@ -58,7 +58,6 @@
         console.log("connected socket")
         const data = {
             username: username,
-            message: username + '님이 입장했습니다.',
             type: 'SERVER',  // 서버 메시지로 구분
             room: room,
             date: getFormattedDateTime()
@@ -90,7 +89,6 @@
     window.addEventListener('beforeunload', () => {
         socket.emit('send_message', {
             username: username,
-            message: username+`님이 퇴장했습니다.`,
             type: 'SERVER',
             room: room,
             date: getFormattedDateTime()
