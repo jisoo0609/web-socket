@@ -10,10 +10,10 @@
 <div id="username-page">
     <div class="username-page-container">
         <h1 class="title">이름을 입력하세요</h1>
-        <form id="enter-form" name="usernameForm">
+        <form id="enter-form" name="usernameForm" action="/chat/enter">
             <div class="form-group">
                 <label for="username">
-                    <input type="text" id="username" placeholder="Input Username" autocomplete="off" class="form-control">
+                    <input type="text" id="username" name="username" placeholder="Input Username" autocomplete="off" class="form-control">
                 </label>
             </div>
             <div class="form-group">
@@ -22,12 +22,5 @@
         </form>
     </div>
 </div>
-<script>
-    document.getElementById('enter-form').addEventListener('submit', event => {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        location.href = `/chat/enter?username=`+username;
-    })
-</script>
 </body>
 </html>

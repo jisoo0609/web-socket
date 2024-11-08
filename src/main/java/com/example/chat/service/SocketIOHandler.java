@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,10 +40,10 @@ public class SocketIOHandler {
 
     public DataListener<Message> onChatReceived() {
         return (senderClient, data, ackSender) -> {
+            log.info("=========onChatReceived-===============");
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
-            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getDate());
-            log.info("send_username: {}, enter_date: {}", data.getUsername(), data.getDate());
+            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getUsername(), data.getDate());
         };
     }
 
@@ -54,6 +55,7 @@ public class SocketIOHandler {
             String username = params.get("username").stream().collect(Collectors.joining());
 
             client.joinRoom(room);
+
             log.info("client joined room!");
             if (!memberList.contains(username)) {
                 memberList.add(username);

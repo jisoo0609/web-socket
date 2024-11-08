@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
@@ -20,9 +21,15 @@ public class ChatController {
         return "lobby";
     }
 
+//    @RequestMapping("/enter")
+//    public String enter(Model model) {
+//        log.info("=====enter=====");
+//        return "chat";
+//    }
+
     @RequestMapping("/enter")
-    public String enter(Model model) {
-        log.info("=====enter=====");
+    public String enter(@RequestParam String username, Model model) {
+        model.addAttribute("username", username);
         return "chat";
     }
 
