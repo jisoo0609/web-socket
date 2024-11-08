@@ -62,7 +62,6 @@
             room: room,
             date: getFormattedDateTime()
         };
-
         socket.emit('send_message', data);
         addMessageToChat(data);
     });
@@ -80,28 +79,6 @@
 
         responseDiv.scrollTop = responseDiv.scrollHeight;
     }
-
-    // 채팅폼 제출 시 메시지 보내기
-    document.getElementById('chat-form').addEventListener('submit', (e) => {
-        e.preventDefault();  // 기본 제출 동작을 막기
-
-        const messageInput = document.getElementById('message');
-        const messageContent = messageInput.value;  // 사용자가 입력한 메시지 가져오기
-
-        if (messageContent.trim() !== "") {  // 빈 메시지 보내지 않기
-            // 메시지 객체 생성
-            const message = {
-                type: 'CLIENT',   // 메시지 유형 (텍스트)
-                room: room,     // 방 이름
-                message: messageContent,  // 사용자가 입력한 메시지 내용
-                username: username, // 보낸 사람 이름
-            };
-
-            // 메시지 전송
-            socket.emit('send_message', message);
-            messageInput.value = '';  // 입력 필드 초기화
-        }
-    });
 
 
     // 브라우저를 닫을 때, 퇴장 메시지 보내기

@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,8 +59,6 @@ public class SocketIOHandler {
                 memberList.add(username);
             }
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
-            log.info("member List: {}", getMemberList().toString());
-
         };
     }
 
@@ -74,7 +71,6 @@ public class SocketIOHandler {
             memberList.remove(username);
 
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
-            log.info("member List: {}", getMemberList().toString());
         };
     }
 }
