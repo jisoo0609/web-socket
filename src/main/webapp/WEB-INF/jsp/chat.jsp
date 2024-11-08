@@ -55,6 +55,7 @@
 
     // 서버 연결 후, 입장 알림 메시지 보내기
     socket.on('connect', () => {
+        console.log("connected socket")
         const data = {
             username: username,
             message: username + '님이 입장했습니다.',
@@ -62,7 +63,7 @@
             room: room,
             date: getFormattedDateTime()
         };
-        socket.emit('send_message', data);
+        socket.emit("send_message", data);
         addMessageToChat(data);
     });
 
@@ -80,6 +81,10 @@
         responseDiv.scrollTop = responseDiv.scrollHeight;
     }
 
+    socket.on('get_message', (data) => {
+        console.log('Received message:', data);
+        addMessageToChat(data);
+    });
 
     // 브라우저를 닫을 때, 퇴장 메시지 보내기
     window.addEventListener('beforeunload', () => {
