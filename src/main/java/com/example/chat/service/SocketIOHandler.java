@@ -41,7 +41,7 @@ public class SocketIOHandler {
         return (senderClient, data, ackSender) -> {
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
-            socketService.sendMessage(data.getRoom(), "get_message", senderClient, String.valueOf(data.getDate()));
+            socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getDate());
             log.info("send_username: {}, enter_date: {}", data.getUsername(), data.getDate());
         };
     }
