@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class SocketService {
-    public void sendMessage(String room, String eventName, SocketIOClient senderClient, String username, String enterDate) {
+    public void sendMessage(String room, String eventName, SocketIOClient senderClient, String username, String enterdate) {
         log.info("=====sendMessage=====");
         for (SocketIOClient client : senderClient.getNamespace().getRoomOperations(room).getClients()) {
             log.info("Checking client: " + client.getSessionId());
@@ -18,7 +18,7 @@ public class SocketService {
             if (!client.getSessionId().equals(senderClient.getSessionId())) {
                 log.info("===broadcasting to client: " + client.getSessionId());
                 try {
-                    client.sendEvent(eventName, new Message(MessageType.SERVER, username, enterDate));
+                    client.sendEvent(eventName, new Message(MessageType.SERVER, username, enterdate));
                     log.info("Message sent to client: " + client.getSessionId());
                 } catch (Exception e) {
                     e.printStackTrace();

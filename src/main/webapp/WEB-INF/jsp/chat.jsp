@@ -60,7 +60,7 @@
             username: username,
             type: 'SERVER',  // 서버 메시지로 구분
             room: room,
-            date: getFormattedDateTime()
+            enterDate: getFormattedDateTime()
         };
         socket.emit("send_message", data);
         addMessageToChat(data);
@@ -72,7 +72,14 @@
         const chatMessage = document.createElement('div');
         const message = document.createElement('p');
 
-        message.innerText = "이름: " + data.username + "\t입장 시간: " + data.date;
+        message.innerText = "이름: " + data.username + "\t입장 시간: " + data.enterDate + "\t퇴장시간: "+data.exitDate;
+
+        // 강퇴 버튼 생성
+        const kickButton = document.createElement('button');
+        kickButton.innerText = '강퇴';
+        kickButton.addEventListener('click', function() {
+            kickUser(data.username);
+        });
 
         chatMessage.appendChild(message);
         responseDiv.appendChild(chatMessage);
@@ -91,7 +98,7 @@
             username: username,
             type: 'SERVER',
             room: room,
-            date: getFormattedDateTime()
+            exitDate: getFormattedDateTime()
         });
     });
 
