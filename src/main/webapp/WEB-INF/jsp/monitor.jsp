@@ -6,9 +6,6 @@
     <meta charset="UTF-8">
     <title>WebSocket Chatting</title>
     <link rel="stylesheet" href="/css/monitor.css">
-    <style>
-
-    </style>
 </head>
 <body>
 <div id="container">
@@ -16,8 +13,8 @@
     <div class="container">
         <div class="video-container">
             <div id="video">영상</div>
-            <div id="question">
-                <button>질문하기</button>
+            <div id="attend">
+                <button>참석자</button>
             </div>
         </div>
         <div id="slide">슬라이드</div>
