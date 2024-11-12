@@ -64,7 +64,7 @@ public class SocketIOHandler {
 
     public DisconnectListener onDisconnected() {
         return (client) -> {
-           Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
+            Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
             String room = params.get("room").stream().collect(Collectors.joining());
             String username = params.get("username").stream().collect(Collectors.joining());
 

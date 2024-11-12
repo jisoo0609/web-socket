@@ -1,0 +1,72 @@
+#eventName {
+    height: 100px;
+    border: 2px dotted #000;
+    background-color: #f0f0f0;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.container {
+    display: flex; /* 가로로 배치 */
+    gap: 20px; /* 요소들 간의 간격 */
+    align-items: flex-start; /* 세로 정렬을 위쪽으로 설정 */
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column; /* 영상과 질문하기 버튼 세로 배치 */
+    gap: 20px; /* 영상과 질문하기 간 간격 */
+    align-items: center; /* 가운데 정렬 */
+}
+
+#video {
+    width: 300px;
+    height: 200px;
+    border: 2px dotted #000;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#question {
+    text-align: center; /* 가운데 정렬 */
+}
+
+#question button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#question button:hover {
+    background-color: #45a049;
+}
+
+#slide {
+    width: 80%;
+    height: 400px;
+    border: 2px dotted #000;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#message {
+    height: 100px;
+    border: 2px dotted #000;
+    background-color: #f0f0f0;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}

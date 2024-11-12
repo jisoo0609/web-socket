@@ -27,4 +27,9 @@ public class ChatController {
         return "chat";
     }
 
+    @RequestMapping("/monitor")
+    public String monitor() {
+        return "monitor";
+    }
+
 }
