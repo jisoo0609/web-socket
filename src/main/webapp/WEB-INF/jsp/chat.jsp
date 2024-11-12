@@ -69,6 +69,17 @@
     function addMessageToChat(data) {
         const responseDiv = document.getElementById('response');
 
+        // 이미 같은 username의 메시지가 있는지 확인
+        const existingMessage = Array.from(responseDiv.getElementsByTagName('div')).find(chatMessage => {
+            const message = chatMessage.querySelector('p');
+            return message && message.innerText.includes('이름: ' + data.username);
+        });
+
+        // 이미 동일한 username이 있다면, 메시지를 추가하지 않음
+        if (existingMessage) {
+            return;
+        }
+
         const chatMessage = document.createElement('div');
         const message = document.createElement('p');
 

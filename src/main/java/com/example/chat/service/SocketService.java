@@ -1,7 +1,6 @@
 package com.example.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
 import com.example.chat.model.Message;
 import com.example.chat.model.MessageType;
 import lombok.extern.slf4j.Slf4j;
