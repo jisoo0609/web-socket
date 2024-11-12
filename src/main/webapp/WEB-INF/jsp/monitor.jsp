@@ -29,11 +29,20 @@
     <button class="close-btn" id="closePopup">&times;</button>
     <h3>참석자</h3>
     <ul>
-        <li>참석자 1</li>
-        <li>참석자 2</li>
-        <li>참석자 3</li>
+        <li>
+            참석자 1
+            <button class="kick-btn">강퇴</button>
+        </li>
+        <li>
+            참석자 2
+            <button class="kick-btn">강퇴</button>
+        </li>
+        <li>
+            참석자 3
+            <button class="kick-btn">강퇴</button>
+        </li>
     </ul>
-    <button class="end-btn" id="end-btn">종료</button>
+    <button class="end-btn">종료</button>
 </div>
 
 <script>
