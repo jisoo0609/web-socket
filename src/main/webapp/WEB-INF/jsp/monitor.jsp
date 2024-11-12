@@ -27,12 +27,13 @@
 
 <div id="attendeePopup">
     <button class="close-btn" id="closePopup">&times;</button>
-    <h3>참석자 목록</h3>
+    <h3>참석자</h3>
     <ul>
         <li>참석자 1</li>
         <li>참석자 2</li>
         <li>참석자 3</li>
     </ul>
+    <button class="end-btn" id="end-btn">종료</button>
 </div>
 
 <script>
