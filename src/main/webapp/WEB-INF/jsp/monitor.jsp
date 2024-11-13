@@ -7,7 +7,72 @@
     <title>WebSocket Chatting</title>
     <link rel="stylesheet" href="/css/monitor.css">
     <style>
+        /* 팝업 창의 높이를 고정하고, 세로 스크롤을 추가 */
+        #attendeePopup {
+            display: none; /* 팝업 숨김 */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; /* 폭을 500px로 설정 */
+            height: 80%; /* 팝업 높이를 고정 (화면의 80%로 설정) */
+            max-height: 80%; /* 팝업의 최대 높이를 80%로 설정 */
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* 팝업을 가장 위로 띄움 */
+            overflow-y: auto; /* 세로 방향으로 스크롤이 생기도록 */
+        }
 
+        /* 테이블 스타일 - 기본 테이블 레이아웃으로 되돌림 */
+        #attendeePopup table {
+            width: 100%;
+            border-collapse: collapse; /* 테이블 셀 간 경계가 붙도록 설정 */
+            margin-top: 10px;
+        }
+
+        #attendeePopup th, #attendeePopup td {
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #ddd;
+        }
+
+        /* 테이블 헤더 스타일 */
+        #attendeePopup th {
+            background-color: #f4f4f4;
+        }
+
+        /* 강퇴 버튼 스타일 */
+        #attendeePopup .kick-btn {
+            padding: 8px 12px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+
+        #attendeePopup .kick-btn:hover {
+            background-color: dodgerblue;
+        }
+
+        #attendeePopup .kick-btn:active {
+            background-color: dodgerblue;
+        }
+
+        #attendeePopup .kick-btn:focus {
+            outline: none;
+        }
+
+        /* 테이블의 각 행은 기본적으로 수직 정렬됩니다. */
+        #attendeePopup table td {
+        }
     </style>
 </head>
 <body>
@@ -28,22 +93,81 @@
 <div id="attendeePopup">
     <button class="close-btn" id="closePopup">&times;</button>
     <h3>참석자</h3>
-    <ul>
-        <li>
-            참석자 1
-            <button class="kick-btn">강퇴</button>
-        </li>
-        <li>
-            참석자 2
-            <button class="kick-btn">강퇴</button>
-        </li>
-        <li>
-            참석자 3
-            <button class="kick-btn">강퇴</button>
-        </li>
-    </ul>
+    <!-- 참석자 목록을 표시하는 테이블 -->
+    <table border="1">
+        <thead>
+        <tr>
+            <th>참석자명</th>
+            <th>입장 시간</th>
+            <th>퇴장 시간</th>
+            <th>기능</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>참석자 1</td>
+            <td>2024-11-13 10:00</td>
+            <td>2024-11-13 12:00</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 2</td>
+            <td>2024-11-13 10:05</td>
+            <td>2024-11-13 12:05</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 3</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>        <tr>
+            <td>참석자 4</td>
+            <td>2024-11-13 10:10</td>
+            <td>2024-11-13 12:10</td>
+            <td><button class="kick-btn">강퇴</button></td>
+        </tr>
+        </tbody>
+    </table>
     <button class="end-btn">종료</button>
 </div>
+
 <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
 <script>
     // 참석자 버튼 클릭 시 팝업 표시
