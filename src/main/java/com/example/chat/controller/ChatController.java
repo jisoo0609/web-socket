@@ -28,7 +28,10 @@ public class ChatController {
     }
 
     @RequestMapping("/monitor")
-    public String monitor() {
+    public String monitor(@RequestParam("username") String username, Model model) {
+        log.info("username: {}", username);
+        model.addAttribute("username", username);
+
         return "monitor";
     }
 

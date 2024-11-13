@@ -10,7 +10,7 @@
 <div id="username-page">
     <div class="username-page-container">
         <h1 class="title">이름을 입력하세요</h1>
-        <form id="enter-form" name="usernameForm" action="/chat/enter">
+        <form id="enter-form" name="usernameForm" action="/chat/monitor" method="post">
             <div class="form-group">
                 <label for="username">
                     <input type="text" id="username" name="username" placeholder="Input Username" autocomplete="off" class="form-control">
