@@ -15,7 +15,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 600px; /* 폭을 500px로 설정 */
-            height: 80%; /* 팝업 높이를 고정 (화면의 80%로 설정) */
+            height: 50%; /* 팝업 높이를 고정 (화면의 80%로 설정) */
             max-height: 80%; /* 팝업의 최대 높이를 80%로 설정 */
             padding: 20px;
             background-color: white;
@@ -44,35 +44,6 @@
         #attendeePopup th {
             background-color: #f4f4f4;
         }
-
-        /* 강퇴 버튼 스타일 */
-        #attendeePopup .kick-btn {
-            padding: 8px 12px;
-            background-color: deepskyblue;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-left: 10px;
-        }
-
-        #attendeePopup .kick-btn:hover {
-            background-color: dodgerblue;
-        }
-
-        #attendeePopup .kick-btn:active {
-            background-color: dodgerblue;
-        }
-
-        #attendeePopup .kick-btn:focus {
-            outline: none;
-        }
-
-        /* 테이블의 각 행은 기본적으로 수직 정렬됩니다. */
-        #attendeePopup table td {
-        }
     </style>
 </head>
 <body>
@@ -94,7 +65,7 @@
     <button class="close-btn" id="closePopup">&times;</button>
     <h3>참석자</h3>
     <!-- 참석자 목록을 표시하는 테이블 -->
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>참석자명</th>
@@ -123,41 +94,6 @@
             <td><button class="kick-btn">강퇴</button></td>
         </tr>
         <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>        <tr>
             <td>참석자 4</td>
             <td>2024-11-13 10:10</td>
             <td>2024-11-13 12:10</td>
