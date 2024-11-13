@@ -7,43 +7,7 @@
     <title>WebSocket Chatting</title>
     <link rel="stylesheet" href="/css/monitor.css">
     <style>
-        /* 팝업 창의 높이를 고정하고, 세로 스크롤을 추가 */
-        #attendeePopup {
-            display: none; /* 팝업 숨김 */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px; /* 폭을 500px로 설정 */
-            height: 50%; /* 팝업 높이를 고정 (화면의 80%로 설정) */
-            max-height: 80%; /* 팝업의 최대 높이를 80%로 설정 */
-            padding: 20px;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* 팝업을 가장 위로 띄움 */
-            overflow-y: auto; /* 세로 방향으로 스크롤이 생기도록 */
-        }
 
-        /* 테이블 스타일 - 기본 테이블 레이아웃으로 되돌림 */
-        #attendeePopup table {
-            width: 100%;
-            border-collapse: collapse; /* 테이블 셀 간 경계가 붙도록 설정 */
-            margin-top: 10px;
-        }
-
-        #attendeePopup th, #attendeePopup td {
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            border: 1px solid #ddd;
-        }
-
-        /* 테이블 헤더 스타일 */
-        #attendeePopup th {
-            background-color: #f4f4f4;
-        }
     </style>
 </head>
 <body>
@@ -123,11 +87,15 @@
             popup.style.display = 'none';
         }
     });
-
+    var username = (new URLSearchParams(location.search)).get('username');
     var room = 'test';
     var socketUrl = 'http://localhost:8081';
 
     const socket = io.connect(socketUrl,{
+        query : {
+            room : room,
+            username : username
+        },
         //'transport': ['xhr-polling'],
         'secure': false,
         'reconnect': true,
