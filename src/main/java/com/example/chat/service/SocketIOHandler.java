@@ -9,9 +9,8 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,6 +21,7 @@ public class SocketIOHandler {
     private final SocketService socketService;
     @Getter
     private final List<String> memberList = new ArrayList<>();
+    private final Map<String, Message> attend = new HashMap<>();
 
     public SocketIOHandler(SocketIOServer socketServer, SocketService socketService) {
         this.server = socketServer;
@@ -58,8 +58,18 @@ public class SocketIOHandler {
             if (!memberList.contains(username)) {
                 memberList.add(username);
             }
+
+            String enterDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            Message message = Message.builder()
+                    .username(username)
+                    .room(room)
+                    .enterDate(enterDate)
+                    .build();
+
+            attend.put(username, message);
+
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
-            log.info("Member List: {}", memberList);
+            log.info(attend.toString());
         };
     }
 
@@ -71,7 +81,14 @@ public class SocketIOHandler {
 
             memberList.remove(username);
 
+            String exitDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            Message message = attend.get(username);
+            message.setExitDate(exitDate);
+
+            attend.put(username, message);
+
             log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
+            log.info(attend.toString());
         };
     }
 }

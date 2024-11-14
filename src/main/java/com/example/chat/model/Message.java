@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Data
 @Builder
