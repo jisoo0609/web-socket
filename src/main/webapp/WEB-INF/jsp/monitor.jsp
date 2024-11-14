@@ -65,31 +65,9 @@
             <th>기능</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>참석자 1</td>
-            <td>2024-11-13 10:00</td>
-            <td>2024-11-13 12:00</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 2</td>
-            <td>2024-11-13 10:05</td>
-            <td>2024-11-13 12:05</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 3</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
-        <tr>
-            <td>참석자 4</td>
-            <td>2024-11-13 10:10</td>
-            <td>2024-11-13 12:10</td>
-            <td><button class="kick-btn">강퇴</button></td>
-        </tr>
+        <tbody id="attendees-list">
+
+
         </tbody>
     </table>
     <button class="end-btn">종료</button>
@@ -159,6 +137,57 @@
         addMessageToChat(data);
     });
 
+    function addMessageToChat(data) {
+        const responseDiv = document.getElementById('attendees-list');
+
+        // 이미 같은 username의 메시지가 있는지 확인
+        const existingMessage = Array.from(responseDiv.getElementsByTagName('tr')).find(chatMessage => {
+            const message = chatMessage.querySelector('td');
+            return message && message.innerText.includes('이름: ' + data.username);
+        });
+
+        // 이미 동일한 username이 있다면, 메시지를 추가하지 않음
+        if (existingMessage) {
+            return;
+        }
+
+        const row = document.createElement('tr');  // 새로운 테이블 행(tr) 생성
+
+        // 참석자명 (이름)
+        const nameCell = document.createElement('td');
+        nameCell.innerText = data.username;
+        row.appendChild(nameCell);
+
+        // 입장 시간
+        const entryTimeCell = document.createElement('td');
+        entryTimeCell.innerText = data.enterDate;
+        row.appendChild(entryTimeCell);
+
+        // 퇴장 시간
+        const exitTimeCell = document.createElement('td');
+        exitTimeCell.innerText = data.exitDate || ''; //
+        row.appendChild(exitTimeCell);
+
+        // 강퇴 버튼
+        const actionCell = document.createElement('td');
+        const kickButton = document.createElement('button');
+        kickButton.innerText = '강퇴';
+        kickButton.classList.add('kick-btn');
+        kickButton.addEventListener('click', function() {
+            kickUser(data.username);
+        });
+        actionCell.appendChild(kickButton);
+        row.appendChild(actionCell);
+
+        // 테이블에 행 추가
+        responseDiv.appendChild(row);
+
+        // 스크롤을 가장 아래로 이동
+        responseDiv.scrollTop = responseDiv.scrollHeight;
+    }
+
+    // 페이지 로드 시 테이블을 렌더링
+    window.onload = renderTable;
 
 </script>
 </body>
