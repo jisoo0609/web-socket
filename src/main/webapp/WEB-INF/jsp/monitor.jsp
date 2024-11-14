@@ -95,6 +95,7 @@
     var username = (new URLSearchParams(location.search)).get('username');
     var room = 'test';
     var socketUrl = 'http://localhost:8081';
+    const attendList = [];
 
     const socket = io.connect(socketUrl,{
         query : {
@@ -133,6 +134,7 @@
             room : room,
             enterDate: getFormattedDateTime()
         };
+        attendList.push(data);
         socket.emit("send_message", data);
         addMessageToChat(data);
     });
@@ -190,6 +192,36 @@
         console.log('Received message:', data);
         addMessageToChat(data);
     });
+
+    // 브라우저를 닫을 때, 퇴장 메시지 보내기
+    window.addEventListener('beforeunload', () => {
+        const data = {
+            username: username,
+            type: 'SERVER',
+            room: room,
+            exitDate: getFormattedDateTime()
+        };
+        socket.emit('send_message', data);
+        socket.emit('disconnect');
+        updateExitTime(data)
+    });
+
+    // 퇴장 시간을 채팅에 업데이트
+    function updateExitTime(data) {
+        const responseDiv = document.getElementById('attendees-list');
+
+        // 퇴장한 사용자의 테이블 행 찾기
+        const rowToUpdate = Array.from(responseDiv.getElementsByTagName('tr')).find(chatMessage => {
+            const message = chatMessage.querySelector('td');
+            return message && message.innerText.includes('이름: ' + data.username);
+        });
+
+        if (rowToUpdate) {
+            // 퇴장 시간 셀 업데이트
+            const exitTimeCell = rowToUpdate.querySelectorAll('td')[2];
+            exitTimeCell.innerText = data.exitDate; // 퇴장 시간 추가
+        }
+    }
 
 </script>
 </body>
