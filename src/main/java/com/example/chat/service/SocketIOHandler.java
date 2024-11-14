@@ -5,6 +5,7 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.example.chat.model.Message;
+import com.example.chat.model.MessageType;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,9 @@ public class SocketIOHandler {
         socketServer.addEventListener("get_member_list", Void.class, (client, data, ackSender) -> {
                 ackSender.sendAckData(memberList);
         });
+        socketServer.addEventListener("attend_list", Void.class, (client, data, ackSender) -> {
+            ackSender.sendAckData(attend);
+        });
     }
 
     public DataListener<Message> onChatReceived() {
@@ -55,12 +59,10 @@ public class SocketIOHandler {
             client.joinRoom(room);
 
             log.info("client joined room!");
-            if (!memberList.contains(username)) {
-                memberList.add(username);
-            }
 
             String enterDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             Message message = Message.builder()
+                    .type(MessageType.SERVER)
                     .username(username)
                     .room(room)
                     .enterDate(enterDate)
