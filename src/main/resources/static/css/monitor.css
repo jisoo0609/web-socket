@@ -111,6 +111,35 @@
     background-color: #f4f4f4;
 }
 
+#attendeePopup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* 종료 버튼 스타일 */
+#attendeePopup .end-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: deepskyblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#attendeePopup .end-btn:hover {
+    background-color: dodgerblue;
+}
+
 /* 강퇴 버튼 스타일 */
 #attendeePopup .kick-btn {
     padding: 8px 12px;

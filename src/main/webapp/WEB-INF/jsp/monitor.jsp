@@ -7,7 +7,34 @@
     <title>WebSocket Chatting</title>
     <link rel="stylesheet" href="/css/monitor.css">
     <style>
+        #attendeePopup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
 
+        /* 종료 버튼 스타일 */
+        #attendeePopup .end-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #attendeePopup .end-btn:hover {
+            background-color: dodgerblue;
+        }
     </style>
 </head>
 <body>
