@@ -173,7 +173,7 @@
         const kickButton = document.createElement('button');
         kickButton.innerText = '강퇴';
         kickButton.classList.add('kick-btn');
-        kickButton.addEventListener('click', function() {
+        kickButton.addEventListener('click', function () {
             kickUser(data.username);
         });
         actionCell.appendChild(kickButton);
@@ -186,8 +186,10 @@
         responseDiv.scrollTop = responseDiv.scrollHeight;
     }
 
-    // 페이지 로드 시 테이블을 렌더링
-    window.onload = renderTable;
+    socket.on('get_message', (data) => {
+        console.log('Received message:', data);
+        addMessageToChat(data);
+    });
 
 </script>
 </body>

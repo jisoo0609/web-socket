@@ -59,6 +59,7 @@ public class SocketIOHandler {
                 memberList.add(username);
             }
             log.info("=====Connected=====> Client: {}, room: {}, username: {}" , client.getSessionId().toString(), room, username);
+            log.info("Member List: {}", memberList);
         };
     }
 
