@@ -1,7 +1,6 @@
 package com.example.chat.controller;
 
 import com.example.chat.model.Message;
-import com.example.chat.model.MessageType;
 import com.example.chat.service.SocketIOHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j

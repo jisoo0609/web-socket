@@ -99,6 +99,7 @@ public class SocketIOHandler {
         };
     }
 
+    // 전체 연결 해제
     public void disconnectAllClient() {
         List<SocketIOClient> clients = server.getAllClients()
                 .stream().map(SocketIOClient.class::cast).collect(Collectors.toList());
