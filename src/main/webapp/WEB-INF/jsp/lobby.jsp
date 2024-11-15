@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>WebSocket Chat</title>
+    <title>socket.io Demo</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>

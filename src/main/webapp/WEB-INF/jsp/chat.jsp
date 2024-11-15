@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>socket.io Demo</title>
+    <title>WebSocket Chat</title>
     <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
