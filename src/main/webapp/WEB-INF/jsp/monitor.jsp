@@ -175,6 +175,11 @@
         const kickButton = document.createElement('button');
         kickButton.innerText = '강퇴';
         kickButton.classList.add('kick-btn');
+
+        kickButton.onclick = function () {
+            socket.emit('kick_user', data.username);
+        }
+
         actionCell.appendChild(kickButton);
         row.appendChild(actionCell);
 
