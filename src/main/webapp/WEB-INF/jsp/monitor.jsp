@@ -70,7 +70,7 @@
 
         </tbody>
     </table>
-    <button class="end-btn">종료</button>
+    <button class="end-btn" onclick=fn_end()>종료</button>
 </div>
 
 <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
@@ -175,9 +175,6 @@
         const kickButton = document.createElement('button');
         kickButton.innerText = '강퇴';
         kickButton.classList.add('kick-btn');
-        kickButton.addEventListener('click', function () {
-            kickUser(data.username);
-        });
         actionCell.appendChild(kickButton);
         row.appendChild(actionCell);
 
@@ -203,24 +200,28 @@
         };
         socket.emit('send_message', data);
         socket.emit('disconnect');
-        updateExitTime(data)
     });
 
-    // 퇴장 시간을 채팅에 업데이트
-    function updateExitTime(data) {
-        const responseDiv = document.getElementById('attendees-list');
+    // // 퇴장 시간을 채팅에 업데이트
+    // function updateExitTime(data) {
+    //     const responseDiv = document.getElementById('attendees-list');
+    //
+    //     // 퇴장한 사용자의 테이블 행 찾기
+    //     const rowToUpdate = Array.from(responseDiv.getElementsByTagName('tr')).find(chatMessage => {
+    //         const message = chatMessage.querySelector('td');
+    //         return message && message.innerText.includes('이름: ' + data.username);
+    //     });
+    //
+    //     if (rowToUpdate) {
+    //         // 퇴장 시간 셀 업데이트
+    //         const exitTimeCell = rowToUpdate.querySelectorAll('td')[2];
+    //         exitTimeCell.innerText = data.exitDate; // 퇴장 시간 추가
+    //     }
+    // }
 
-        // 퇴장한 사용자의 테이블 행 찾기
-        const rowToUpdate = Array.from(responseDiv.getElementsByTagName('tr')).find(chatMessage => {
-            const message = chatMessage.querySelector('td');
-            return message && message.innerText.includes('이름: ' + data.username);
-        });
-
-        if (rowToUpdate) {
-            // 퇴장 시간 셀 업데이트
-            const exitTimeCell = rowToUpdate.querySelectorAll('td')[2];
-            exitTimeCell.innerText = data.exitDate; // 퇴장 시간 추가
-        }
+    // 종료 버튼 클릭시 전체 소켓 연결 해제
+    function fn_end() {
+        socket.emit('disconnect_all');
     }
 
 </script>

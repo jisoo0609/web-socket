@@ -1,5 +1,7 @@
 package com.example.chat.controller;
 
+import com.example.chat.model.Message;
+import com.example.chat.model.MessageType;
 import com.example.chat.service.SocketIOHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -30,9 +37,12 @@ public class ChatController {
     @RequestMapping("/monitor")
     public String monitor(@RequestParam("username") String username, Model model) {
         log.info("username: {}", username);
-        model.addAttribute("username", username);
+
+        Map<String, Message> attend = socketIOHandler.getAttend();
+        model.addAttribute("attend", attend);
+
+        log.info("attend: {}", attend);
 
         return "monitor";
     }
-
 }

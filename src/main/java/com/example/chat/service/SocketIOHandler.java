@@ -1,5 +1,6 @@
 package com.example.chat.service;
 
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -22,6 +23,7 @@ public class SocketIOHandler {
     private final SocketService socketService;
     @Getter
     private final List<String> memberList = new ArrayList<>();
+    @Getter
     private final Map<String, Message> attend = new HashMap<>();
 
     public SocketIOHandler(SocketIOServer socketServer, SocketService socketService) {
@@ -39,11 +41,14 @@ public class SocketIOHandler {
         socketServer.addEventListener("attend_list", Void.class, (client, data, ackSender) -> {
             ackSender.sendAckData(attend);
         });
+        socketServer.addEventListener("disconnect_all", Void.class, (client, data, ackSender) -> {
+            disconnectAllClient();
+        });
     }
 
     public DataListener<Message> onChatReceived() {
         return (senderClient, data, ackSender) -> {
-            log.info("=========onChatReceived-===============");
+            log.info("=========onChatReceived===============");
             log.info("data: {}", data.toString());
             // 모든 클라이언트에게 데이터 broadcasting
             socketService.sendMessage(data.getRoom(), "get_message", senderClient, data.getUsername(), data.getEnterDate());
@@ -93,4 +98,23 @@ public class SocketIOHandler {
             log.info(attend.toString());
         };
     }
+
+    public void disconnectAllClient() {
+        List<SocketIOClient> clients = server.getAllClients()
+                .stream().map(SocketIOClient.class::cast).collect(Collectors.toList());
+        for (SocketIOClient client : clients) {
+            Map<String, List<String>> params = client.getHandshakeData().getUrlParams();
+            String room = params.get("room").stream().collect(Collectors.joining());
+            String username = params.get("username").stream().collect(Collectors.joining());
+
+            String exitDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            Message message = attend.get(username);
+            message.setExitDate(exitDate);
+
+            attend.put(username, message);
+
+            client.disconnect();
+            log.info("=====Disconnected=====> Client: {}, room: {}, username: {}", client.getSessionId().toString(), room, username);
+        }
+    };
 }
