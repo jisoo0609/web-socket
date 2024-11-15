@@ -52,10 +52,55 @@ public class WebSocketChat { ... }
 
 ```
 
-### Controller
-
-
-
 ---
 ## 2024.11. 06
    ### Socket.io를 이용한 구현
+- `pom.xml`에 dependency 추가
+```xml
+<!-- https://mvnrepository.com/artifact/io.socket/socket.io-client -->
+<dependency>
+   <groupId>com.corundumstudio.socketio</groupId>
+   <artifactId>netty-socketio</artifactId>
+   <version>2.0.3</version>
+</dependency>
+```
+### socket.io 서버 구축
+- `SocketIOConfig`
+```java
+public class SocketIoConfig {
+   @Value("${socketio.server.hostname}")
+   private String hostname;
+
+   @Value("${socketio.server.port}")
+   private int port;
+
+   // create socketIO Server
+   private SocketIOServer server;
+
+   @Bean
+   public SocketIOServer socketIOServer() {
+      com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
+
+      config.setHostname(hostname);
+      config.setPort(port);
+
+      return new SocketIOServer(config);
+   }
+
+   @PreDestroy
+   public void stopSocketServer() {
+      this.server.stop();
+   }
+}
+```
+- `ServerCommandLineRunner`
+```java
+public class ServerCommandLineRunner implements CommandLineRunner {
+    private final SocketIOServer server;
+
+    @Override
+    public void run(String... args) throws Exception {
+        server.start();
+    }
+}
+```
